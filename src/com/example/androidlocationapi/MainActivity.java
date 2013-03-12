@@ -48,7 +48,10 @@ public class MainActivity extends FragmentActivity {
 	private String mac = "";
 	private String outin = "outside";
 	
+	String simmiip = "192.168.53.246";
+	String danielip = "10.25.231.246";
 	
+	private String ip = simmiip;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +153,7 @@ public class MainActivity extends FragmentActivity {
 				outin = "inside";
 				Toast.makeText(this, "Inside box", Toast.LENGTH_SHORT).show();
 					
-				SendMessage myRunnable = new SendMessage(mac+"_"+name+"_inside");
+				SendMessage myRunnable = new SendMessage(mac+"_"+name+"_inside",ip);
 			    Thread t = new Thread(myRunnable);
 			    t.start();
 
@@ -161,7 +164,7 @@ public class MainActivity extends FragmentActivity {
 				outin = "outside";
 				
 				Toast.makeText(this, "Outside box", Toast.LENGTH_SHORT).show();
-				SendMessage myRunnable = new SendMessage(mac+"_"+name+"_outside");
+				SendMessage myRunnable = new SendMessage(mac+"_"+name+"_outside",ip);
 		        Thread t = new Thread(myRunnable);
 		        t.start();
 			}

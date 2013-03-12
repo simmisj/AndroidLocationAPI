@@ -13,8 +13,8 @@ public class SendMessage implements Runnable {
 	
 	String TAG = "test";
 	
-	String simmiip = "192.168.53.246";
-	String danielip = "10.25.231.246";
+	
+	String ip = "";
 	
 	@Override
 	public void run() {
@@ -23,7 +23,7 @@ public class SendMessage implements Runnable {
 			Log.v(TAG,"Started sending...");
 			   //String modifiedSentence;
 			   //BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
-			   Socket clientSocket = new Socket("192.168.53.246", 6789);
+			   Socket clientSocket = new Socket("simmiip", 6789);
 			   
 			   DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			   
@@ -45,9 +45,10 @@ public class SendMessage implements Runnable {
 			}
 	}
 	// Format of message: MAC_NAME_INSIDE/OUTSIDE   Example:  0f:4f:3s:3e:3e:3e_daniel_inside     0f:4f:3s:3e:3e:3e_daniel_outside
-	public SendMessage(String message)
+	public SendMessage(String message,String ip)
 	{
 		this.message = message;
+		this.ip = ip;
 		
 	}
 
