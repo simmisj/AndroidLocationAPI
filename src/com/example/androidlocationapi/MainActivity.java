@@ -42,7 +42,7 @@ public class MainActivity extends FragmentActivity {
 	
 	private boolean firststart = true;
 	
-	Intent sendinfo = new Intent(this,SendInfo.class);
+	//Intent sendinfo = new Intent(this,SendInfo.class);
 	
 	private String name = "";
 	private String mac = "";
@@ -52,7 +52,9 @@ public class MainActivity extends FragmentActivity {
 	String simmiipwired = "192.168.56.1";
 	String danielip = "10.25.231.246";
 	
-	private String ip = simmiipwireless;
+	private String ip = danielip;
+	
+	private boolean outsideinside = false; //false means the device is outside. True means it is inside.
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +84,15 @@ public class MainActivity extends FragmentActivity {
 		
 		
 
-		Intent intent = new Intent(PROX_ALERT_INTENT);
-		PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+		//Intent intent = new Intent(PROX_ALERT_INTENT);
+		//PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-		locationManager.addProximityAlert(55.6597983, 12.5912919, 10, -1, proximityIntent);
+		//locationManager.addProximityAlert(55.6597983, 12.5912919, 10, -1, proximityIntent);
 		
 
-		IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
+		//IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
 
-		registerReceiver(new ProximityIntentReceiver(), filter);
+		//registerReceiver(new ProximityIntentReceiver(), filter);
 
 		/*PendingIntent pi = PendingIntent.getActivity(this, 0, sendinfo, 0);
 		
@@ -150,13 +152,18 @@ public class MainActivity extends FragmentActivity {
 
 			if((position.latitude < 55.659928 && position.latitude > 55.659547) && (position.longitude > 12.59048 && position.longitude < 12.59167))
 			{
+				
 				Log.v(TAG,"INSIDE BOX");
 				outin = "inside";
 				Toast.makeText(this, "Inside box", Toast.LENGTH_SHORT).show();
 					
-				SendMessage myRunnable = new SendMessage(mac+"_"+name+"_inside",ip);
-			    Thread t = new Thread(myRunnable);
-			    t.start();
+				if(!outsideinside)
+				{
+					SendMessage myRunnable = new SendMessage(mac+"_"+name+"_inside",ip);
+					Thread t = new Thread(myRunnable);
+					t.start();
+					outsideinside = true;
+				}
 
 			}
 			else
@@ -164,10 +171,14 @@ public class MainActivity extends FragmentActivity {
 				Log.v(TAG,"OUTSIDE BOX");
 				outin = "outside";
 				
-				Toast.makeText(this, "Outside box", Toast.LENGTH_SHORT).show();
-				SendMessage myRunnable = new SendMessage(mac+"_"+name+"_outside",ip);
-		        Thread t = new Thread(myRunnable);
-		        t.start();
+				if(outsideinside)
+				{
+					Toast.makeText(this, "Outside box", Toast.LENGTH_SHORT).show();
+					SendMessage myRunnable = new SendMessage(mac+"_"+name+"_outside",ip);
+		        	Thread t = new Thread(myRunnable);
+		        	t.start();
+		        	outsideinside = false;
+				}
 			}
 	}
 	
