@@ -48,10 +48,11 @@ public class MainActivity extends FragmentActivity {
 	private String mac = "";
 	private String outin = "outside";
 	
-	String simmiip = "192.168.53.246";
+	String simmiipwireless = "10.25.239.235";
+	String simmiipwired = "192.168.56.1";
 	String danielip = "10.25.231.246";
 	
-	private String ip = simmiip;
+	private String ip = simmiipwireless;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -13,6 +13,9 @@ public class SendMessage implements Runnable {
 	
 	String TAG = "test";
 	
+	String simmiipwireless = "10.25.239.235";
+	String simmiipwired = "192.168.56.1";
+	String danielip = "10.25.231.246";
 	
 	String ip = "";
 	
@@ -20,10 +23,10 @@ public class SendMessage implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		try{
-			Log.v(TAG,"Started sending...");
+			Log.v(TAG,"Started sending... to: "+ip);
 			   //String modifiedSentence;
 			   //BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));
-			   Socket clientSocket = new Socket("simmiip", 6789);
+			   Socket clientSocket = new Socket(ip, 6789);
 			   
 			   DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			   
@@ -40,7 +43,7 @@ public class SendMessage implements Runnable {
 			}
 			catch(Exception ea)
 			{
-				Log.v(TAG,"ERRORRRR outside "+ea);
+				Log.v(TAG,"ERRORRRR in SendMessage class: "+ea);
 				
 			}
 	}
